@@ -12,4 +12,4 @@ model = ChatHuggingFace(llm = llm)
 
 result = model.invoke("what is the capital of india")
 
-print(result.content)
+print(result.content)  
