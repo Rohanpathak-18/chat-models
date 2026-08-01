@@ -12,8 +12,11 @@ llm = HuggingFaceEndpoint(
 model = ChatHuggingFace(llm=llm)
 
 
+   
 # Load PromptTemplate
 template = load_prompt("prompt_template.json")
+
+
 
 st.header("Research Tool")
 
@@ -50,16 +53,17 @@ length_input = st.selectbox(
 )
 
 
-prompt = template.invoke({
-  'paper_input': paper_input,
-  'style_input': style_input, 
-  'length_input': length_input
-})
-
 
 # Show selected options
 if st.button("Generate"):
-   result =  model.invoke(prompt)
-   st.write(result.content)
+    chain = template | model
+
+    result = chain.invoke({
+        "paper_input": paper_input,
+        "style_input": style_input,
+        "length_input": length_input
+    })
+
+    st.write(result.content)
         
  
